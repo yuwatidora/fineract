@@ -40,8 +40,7 @@ public class OrganisationWorkingDaysConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(WorkingDaysWritePlatformService.class)
-    public WorkingDaysWritePlatformService workingDaysWritePlatformService(WorkingDaysRepositoryWrapper daysRepositoryWrapper,
-            WorkingDayValidator fromApiJsonDeserializer) {
-        return new WorkingDaysWritePlatformServiceJpaRepositoryImpl(daysRepositoryWrapper, fromApiJsonDeserializer);
+    public WorkingDaysWritePlatformService workingDaysWritePlatformService(WorkingDaysRepositoryWrapper daysRepositoryWrapper) {
+        return new WorkingDaysWritePlatformServiceJpaRepositoryImpl(daysRepositoryWrapper);
     }
 }

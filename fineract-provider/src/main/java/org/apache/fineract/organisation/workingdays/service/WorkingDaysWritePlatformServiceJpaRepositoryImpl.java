@@ -19,16 +19,16 @@
 package org.apache.fineract.organisation.workingdays.service;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.validate.ValidationException;
-import org.apache.fineract.infrastructure.core.api.JsonCommand;
-import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
-import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
-import org.apache.fineract.organisation.workingdays.api.WorkingDaysApiConstants;
 import org.apache.fineract.organisation.workingdays.data.WorkingDayValidator;
+import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDays;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysRepositoryWrapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,25 +37,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements WorkingDaysWritePlatformService {
 
     private final WorkingDaysRepositoryWrapper daysRepositoryWrapper;
-    private final WorkingDayValidator fromApiJsonDeserializer;
 
     @Transactional
     @Override
-    public CommandProcessingResult updateWorkingDays(JsonCommand command) {
+    public Map<String, Object> updateWorkingDays(WorkingDaysUpdateRequest request) {
         String recurrence = "";
         RRule rrule = null;
         try {
-            this.fromApiJsonDeserializer.validateForUpdate(command.json());
             final WorkingDays workingDays = this.daysRepositoryWrapper.findOne();
 
-            recurrence = command.stringValueOfParameterNamed(WorkingDaysApiConstants.recurrence);
+            recurrence = request.getRecurrence();
             rrule = new RRule(recurrence);
             rrule.validate();
 
-            Map<String, Object> changes = workingDays.update(command);
+            Map<String, Object> changes = update(workingDays, request);
             this.daysRepositoryWrapper.saveAndFlush(workingDays);
-            return new CommandProcessingResultBuilder().withCommandId(command.commandId()).withEntityId(workingDays.getId()).with(changes)
-                    .build();
+            return changes;
         } catch (final ValidationException e) {
             throw new PlatformDataIntegrityException("error.msg.invalid.recurring.rule",
                     "The Recurring Rule value: " + recurrence + " is not valid.", "recurrence", recurrence, e);
@@ -64,5 +61,32 @@ public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements Working
                     "Error in passing the Recurring Rule value: " + recurrence, "recurrence", e.getMessage(), e);
         }
     }
+
+    public HashMap<String, Object> update(WorkingDays workingDays, WorkingDaysUpdateRequest request){
+        HashMap<String, Object> changes = new HashMap<>();
+
+        if (!Objects.equals(request.getRecurrence(), workingDays.getRecurrence())) {
+            workingDays.setRecurrence(request.getRecurrence());
+            changes.put("recurrence", request.getRecurrence());
+        }
+
+        if (!Objects.equals(request.getRepaymentRescheduleType(), workingDays.getRepaymentReschedulingType())) {
+            workingDays.setRepaymentReschedulingType(request.getRepaymentRescheduleType());
+            changes.put("repaymentRescheduleType", request.getRepaymentRescheduleType());
+        }
+
+        if (!Objects.equals(request.getExtendTermForDailyRepayments(), workingDays.getExtendTermForDailyRepayments())) {
+            workingDays.setExtendTermForDailyRepayments(request.getExtendTermForDailyRepayments());
+            changes.put("extendTermForDailyRepayments", request.getExtendTermForDailyRepayments());
+        }
+
+        if (!Objects.equals(request.getExtendTermForRepaymentsOnHolidays(), workingDays.getExtendTermForRepaymentsOnHolidays())) {
+            workingDays.setExtendTermForRepaymentsOnHolidays(request.getExtendTermForRepaymentsOnHolidays());
+            changes.put("extendTermForRepaymentsOnHolidays", request.getExtendTermForRepaymentsOnHolidays());
+        }
+        return changes;
+    }
+
+
 
 }

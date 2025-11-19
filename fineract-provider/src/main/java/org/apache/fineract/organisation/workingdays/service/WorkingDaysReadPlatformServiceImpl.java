@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 import org.apache.fineract.infrastructure.core.domain.JdbcSupport;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysData;
+import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateResponse;
 import org.apache.fineract.organisation.workingdays.domain.RepaymentRescheduleType;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysEnumerations;
 import org.apache.fineract.organisation.workingdays.exception.WorkingDaysNotFoundException;
