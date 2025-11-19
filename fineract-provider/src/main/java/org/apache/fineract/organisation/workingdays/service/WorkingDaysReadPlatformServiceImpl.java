@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 import org.apache.fineract.infrastructure.core.domain.JdbcSupport;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysData;
-import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateResponse;
 import org.apache.fineract.organisation.workingdays.domain.RepaymentRescheduleType;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysEnumerations;
 import org.apache.fineract.organisation.workingdays.exception.WorkingDaysNotFoundException;
@@ -66,7 +65,13 @@ public class WorkingDaysReadPlatformServiceImpl implements WorkingDaysReadPlatfo
             final Boolean extendTermForDailyRepayments = rs.getBoolean("extendTermForDailyRepayments");
             final Boolean extendTermForRepaymentsOnHolidays = rs.getBoolean("extendTermForRepaymentsOnHolidays");
 
-            return new WorkingDaysData(id, recurrence, status, extendTermForDailyRepayments, extendTermForRepaymentsOnHolidays);
+            return WorkingDaysData.builder()
+                    .id(id)
+                    .recurrence(recurrence)
+                    .repaymentRescheduleType(status)
+                    .extendTermForDailyRepayments(extendTermForDailyRepayments)
+                    .extendTermForRepaymentsOnHolidays(extendTermForRepaymentsOnHolidays)
+                    .build();
         }
     }
 
@@ -78,7 +83,14 @@ public class WorkingDaysReadPlatformServiceImpl implements WorkingDaysReadPlatfo
             final String sql = " select " + rm.schema();
             WorkingDaysData data = this.jdbcTemplate.queryForObject(sql, rm); // NOSONAR
             Collection<EnumOptionData> repaymentRescheduleOptions = repaymentRescheduleTypeOptions();
-            return new WorkingDaysData(data, repaymentRescheduleOptions);
+            return WorkingDaysData.builder()
+                    .id(data.getId())
+                    .recurrence(data.getRecurrence())
+                    .repaymentRescheduleType(data.getRepaymentRescheduleType())
+                    .extendTermForDailyRepayments(data.getExtendTermForDailyRepayments())
+                    .extendTermForRepaymentsOnHolidays(data.getExtendTermForRepaymentsOnHolidays())
+                    .repaymentRescheduleOptions(repaymentRescheduleOptions)
+                    .build();
         } catch (final EmptyResultDataAccessException e) {
             throw new WorkingDaysNotFoundException(e);
         }
@@ -87,7 +99,7 @@ public class WorkingDaysReadPlatformServiceImpl implements WorkingDaysReadPlatfo
     @Override
     public WorkingDaysData repaymentRescheduleType() {
         Collection<EnumOptionData> repaymentRescheduleOptions = repaymentRescheduleTypeOptions();
-        return new WorkingDaysData(null, null, null, repaymentRescheduleOptions, null, null);
+        return WorkingDaysData.builder().repaymentRescheduleOptions(repaymentRescheduleOptions).build();
     }
 
     private Collection<EnumOptionData> repaymentRescheduleTypeOptions() {
