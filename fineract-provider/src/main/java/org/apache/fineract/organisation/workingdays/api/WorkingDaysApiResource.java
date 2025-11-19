@@ -68,7 +68,6 @@ public class WorkingDaysApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @Operation(summary = "List Working days", description = "Example Requests:\n" + "\n" + "workingdays")
     public WorkingDaysData retrieveAll() {
-        this.context.authenticatedUser().validateHasReadPermission(WorkingDaysApiConstants.WORKING_DAYS_RESOURCE_NAME);
         return this.workingDaysReadPlatformService.retrieve();
     }
 
@@ -77,12 +76,11 @@ public class WorkingDaysApiResource {
     @Produces({ MediaType.APPLICATION_JSON })
     @Operation(summary = "Update a Working Day", description = "Mandatory Fields\n"
             + "recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale")
-    public WorkingDaysUpdateResponse update(@HeaderParam("Idempotency-Key") String idempotencyKey, @Valid WorkingDaysUpdateRequest request){
+    public WorkingDaysUpdateResponse update(@Valid WorkingDaysUpdateRequest request){
 
         final var command = new WorkingDaysUpdateCommand();
 
         command.setId(UUID.randomUUID());
-        command.setIdempotencyKey(idempotencyKey);
         command.setCreatedAt(DateUtils.getAuditOffsetDateTime());
         command.setPayload(request);
 
@@ -98,8 +96,6 @@ public class WorkingDaysApiResource {
     @Operation(summary = "Working Days Template", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for working days.\n"
             + "\n" + "Example Request:\n" + "\n" + "workingdays/template")
     public WorkingDaysData template() {
-        this.context.authenticatedUser().validateHasReadPermission(WorkingDaysApiConstants.WORKING_DAYS_RESOURCE_NAME);
-
         return this.workingDaysReadPlatformService.repaymentRescheduleType();
     }
 
