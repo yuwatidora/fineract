@@ -18,20 +18,16 @@
  */
 package org.apache.fineract.organisation.workingdays.handler;
 
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.fineract.command.core.Command;
 import org.apache.fineract.command.core.CommandHandler;
-import org.apache.fineract.commands.handler.NewCommandSourceHandler;
-import org.apache.fineract.infrastructure.core.data.EnumOptionData;
-import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateResponse;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateResponse;
 import org.apache.fineract.organisation.workingdays.service.WorkingDaysWritePlatformService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Map;
 
 @Slf4j
 @Component
@@ -40,21 +36,15 @@ public class UpdateWorkingDaysCommandHandler implements CommandHandler<WorkingDa
 
     private final WorkingDaysWritePlatformService workingDaysWritePlatformService;
 
-
     @Transactional
     @Override
     public WorkingDaysUpdateResponse handle(Command<WorkingDaysUpdateRequest> command) {
         WorkingDaysUpdateRequest request = command.getPayload();
-        Map<String, Object> changes = this.workingDaysWritePlatformService.updateWorkingDays(request) ;
+        Map<String, Object> changes = this.workingDaysWritePlatformService.updateWorkingDays(request);
 
-        return WorkingDaysUpdateResponse.builder()
-                .changes(changes)
-                .recurrence(request.getRecurrence())
-                .repaymentRescheduleType(request.getRecurrence())
-                .extendTermForDailyRepayments(request.getExtendTermForDailyRepayments())
-                .extendTermForDailyRepayments(request.getExtendTermForDailyRepayments())
-                .build();
+        return WorkingDaysUpdateResponse.builder().changes(changes).recurrence(request.getRecurrence())
+                .repaymentRescheduleType(request.getRecurrence()).extendTermForDailyRepayments(request.getExtendTermForDailyRepayments())
+                .extendTermForDailyRepayments(request.getExtendTermForDailyRepayments()).build();
     }
-
 
 }

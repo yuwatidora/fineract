@@ -154,7 +154,7 @@ public class SecurityConfig {
                             .hasAnyAuthority("ALL_FUNCTIONS", "ALL_FUNCTIONS_READ", "READ_CURRENCY")
                             .requestMatchers(antMatcher(HttpMethod.POST, "/api/*/currencies"))
                             .hasAnyAuthority("ALL_FUNCTIONS", "ALL_FUNCTIONS_WRITE", "UPDATE_CURRENCY")
-                            //working days
+                            // working days
                             .requestMatchers(antMatcher(HttpMethod.GET, "/api/*/workingdays"))
                             .hasAnyAuthority("ALL_FUNCTIONS", "ALL_FUNCTIONS_READ", "READ_WORKING_DAYS")
                             .requestMatchers(antMatcher(HttpMethod.GET, "api/*/workingdays/template"))

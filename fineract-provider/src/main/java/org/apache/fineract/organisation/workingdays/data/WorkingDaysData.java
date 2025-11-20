@@ -21,7 +21,6 @@ package org.apache.fineract.organisation.workingdays.data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +33,7 @@ import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldNameConstants
-//TODO add a change function? and remove all these constructors?, try to use the builder pattern instead
+// TODO add a change function? and remove all these constructors?, try to use the builder pattern instead
 public class WorkingDaysData implements Serializable {
 
     @Serial

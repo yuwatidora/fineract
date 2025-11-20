@@ -22,12 +22,10 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import lombok.RequiredArgsConstructor;
 import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.validate.ValidationException;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
-import org.apache.fineract.organisation.workingdays.data.WorkingDayValidator;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDays;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysRepositoryWrapper;
@@ -62,7 +60,7 @@ public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements Working
         }
     }
 
-    public HashMap<String, Object> update(WorkingDays workingDays, WorkingDaysUpdateRequest request){
+    public HashMap<String, Object> update(WorkingDays workingDays, WorkingDaysUpdateRequest request) {
         HashMap<String, Object> changes = new HashMap<>();
 
         if (!Objects.equals(request.getRecurrence(), workingDays.getRecurrence())) {
@@ -86,7 +84,5 @@ public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements Working
         }
         return changes;
     }
-
-
 
 }

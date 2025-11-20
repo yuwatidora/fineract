@@ -65,13 +65,9 @@ public class WorkingDaysReadPlatformServiceImpl implements WorkingDaysReadPlatfo
             final Boolean extendTermForDailyRepayments = rs.getBoolean("extendTermForDailyRepayments");
             final Boolean extendTermForRepaymentsOnHolidays = rs.getBoolean("extendTermForRepaymentsOnHolidays");
 
-            return WorkingDaysData.builder()
-                    .id(id)
-                    .recurrence(recurrence)
-                    .repaymentRescheduleType(status)
+            return WorkingDaysData.builder().id(id).recurrence(recurrence).repaymentRescheduleType(status)
                     .extendTermForDailyRepayments(extendTermForDailyRepayments)
-                    .extendTermForRepaymentsOnHolidays(extendTermForRepaymentsOnHolidays)
-                    .build();
+                    .extendTermForRepaymentsOnHolidays(extendTermForRepaymentsOnHolidays).build();
         }
     }
 
@@ -83,14 +79,11 @@ public class WorkingDaysReadPlatformServiceImpl implements WorkingDaysReadPlatfo
             final String sql = " select " + rm.schema();
             WorkingDaysData data = this.jdbcTemplate.queryForObject(sql, rm); // NOSONAR
             Collection<EnumOptionData> repaymentRescheduleOptions = repaymentRescheduleTypeOptions();
-            return WorkingDaysData.builder()
-                    .id(data.getId())
-                    .recurrence(data.getRecurrence())
+            return WorkingDaysData.builder().id(data.getId()).recurrence(data.getRecurrence())
                     .repaymentRescheduleType(data.getRepaymentRescheduleType())
                     .extendTermForDailyRepayments(data.getExtendTermForDailyRepayments())
                     .extendTermForRepaymentsOnHolidays(data.getExtendTermForRepaymentsOnHolidays())
-                    .repaymentRescheduleOptions(repaymentRescheduleOptions)
-                    .build();
+                    .repaymentRescheduleOptions(repaymentRescheduleOptions).build();
         } catch (final EmptyResultDataAccessException e) {
             throw new WorkingDaysNotFoundException(e);
         }
