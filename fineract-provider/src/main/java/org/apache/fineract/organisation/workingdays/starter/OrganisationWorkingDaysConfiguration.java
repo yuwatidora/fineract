@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.organisation.workingdays.starter;
 
+import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequestValidator;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysRepositoryWrapper;
 import org.apache.fineract.organisation.workingdays.service.WorkingDaysReadPlatformService;
 import org.apache.fineract.organisation.workingdays.service.WorkingDaysReadPlatformServiceImpl;
@@ -39,7 +40,7 @@ public class OrganisationWorkingDaysConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(WorkingDaysWritePlatformService.class)
-    public WorkingDaysWritePlatformService workingDaysWritePlatformService(WorkingDaysRepositoryWrapper daysRepositoryWrapper) {
-        return new WorkingDaysWritePlatformServiceJpaRepositoryImpl(daysRepositoryWrapper);
+    public WorkingDaysWritePlatformService workingDaysWritePlatformService(WorkingDaysRepositoryWrapper daysRepositoryWrapper, WorkingDaysUpdateRequestValidator validator) {
+        return new WorkingDaysWritePlatformServiceJpaRepositoryImpl(daysRepositoryWrapper, validator);
     }
 }

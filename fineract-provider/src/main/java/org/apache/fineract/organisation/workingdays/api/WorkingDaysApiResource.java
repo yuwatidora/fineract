@@ -27,10 +27,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
 import org.apache.fineract.command.core.CommandPipeline;
-import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
-import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSerializer;
 import org.apache.fineract.infrastructure.core.service.DateUtils;
-import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.organisation.workingdays.command.WorkingDaysUpdateCommand;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysData;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
@@ -67,7 +64,6 @@ public class WorkingDaysApiResource {
             + "recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale")
     public WorkingDaysUpdateResponse update(@Valid WorkingDaysUpdateRequest request) {
 
-        workingDaysUpdateRequestValidator.validateForUpdate(request);
         final var command = new WorkingDaysUpdateCommand();
 
         command.setId(UUID.randomUUID());

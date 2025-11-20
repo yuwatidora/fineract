@@ -27,6 +27,7 @@ import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.validate.ValidationException;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
+import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequestValidator;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDays;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDaysRepositoryWrapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements WorkingDaysWritePlatformService {
 
     private final WorkingDaysRepositoryWrapper daysRepositoryWrapper;
+    private final WorkingDaysUpdateRequestValidator validator;
 
     @Transactional
     @Override
@@ -42,6 +44,7 @@ public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements Working
         String recurrence = "";
         RRule rrule = null;
         try {
+            this.validator.validateForUpdate(request);
             final WorkingDays workingDays = this.daysRepositoryWrapper.findOne();
 
             recurrence = request.getRecurrence();
