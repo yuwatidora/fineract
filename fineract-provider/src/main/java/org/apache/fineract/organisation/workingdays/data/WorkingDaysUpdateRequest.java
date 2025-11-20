@@ -36,18 +36,13 @@ public class WorkingDaysUpdateRequest implements Serializable {
 
     @Serial
     public static final long serialVersionUID = 1L;
-    @NotNull(message = "{workingdays.recurrence.mandatory}")
+
     private String recurrence;
 
-    @NotNull(message = "{workingdays.repaymentRescheduleType.mandatory}")
-    @Min(value = 1, message = "{workingdays.repaymentRescheduleType.min}")
-    @Max(value = 4, message = "{workingdays.repaymentRescheduleType.max}")
     private Integer repaymentRescheduleType;
 
-    @NotNull(message = "{workingdays.extendTermForDailyRepayments.mandatory}")
     private Boolean extendTermForDailyRepayments;
 
-    @NotNull(message = "{workingdays.extendTermForRepaymentsOnHolidays.mandatory}")
     private Boolean extendTermForRepaymentsOnHolidays;
 
 }

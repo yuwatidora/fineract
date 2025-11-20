@@ -34,6 +34,7 @@ import org.apache.fineract.infrastructure.security.service.PlatformSecurityConte
 import org.apache.fineract.organisation.workingdays.command.WorkingDaysUpdateCommand;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysData;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
+import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequestValidator;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateResponse;
 import org.apache.fineract.organisation.workingdays.service.WorkingDaysReadPlatformService;
 import org.springframework.stereotype.Component;
@@ -47,10 +48,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class WorkingDaysApiResource {
 
-    private final DefaultToApiJsonSerializer<WorkingDaysData> toApiJsonSerializer;
     private final WorkingDaysReadPlatformService workingDaysReadPlatformService;
-    private final PortfolioCommandSourceWritePlatformService commandsSourceWritePlatformService;
-    private final PlatformSecurityContext context;
+    private final WorkingDaysUpdateRequestValidator workingDaysUpdateRequestValidator;
     private final CommandPipeline commandPipeline;
 
     @GET
@@ -68,6 +67,7 @@ public class WorkingDaysApiResource {
             + "recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale")
     public WorkingDaysUpdateResponse update(@Valid WorkingDaysUpdateRequest request) {
 
+        workingDaysUpdateRequestValidator.validateForUpdate(request);
         final var command = new WorkingDaysUpdateCommand();
 
         command.setId(UUID.randomUUID());
