@@ -18,8 +18,12 @@
  */
 package org.apache.fineract.organisation.workingdays.data;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.fortuna.ical4j.model.property.RRule;
+import net.fortuna.ical4j.validate.ValidationException;
 import org.apache.fineract.infrastructure.core.data.ApiParameterError;
 import org.apache.fineract.infrastructure.core.data.DataValidatorBuilder;
 import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidationException;
@@ -36,9 +40,10 @@ public class WorkingDaysUpdateRequestValidator {
                 .resource(WorkingDaysApiConstants.WORKING_DAYS_RESOURCE_NAME);
 
         // recurrence (mandatory)
+        String recurrence = request.getRecurrence();
         validator.reset()
                 .parameter(WorkingDaysApiConstants.recurrence)
-                .value(request.getRecurrence())
+                .value(recurrence)
                 .notNull();
 
         // repaymentRescheduleType (optional, but must be 1–4 if present)

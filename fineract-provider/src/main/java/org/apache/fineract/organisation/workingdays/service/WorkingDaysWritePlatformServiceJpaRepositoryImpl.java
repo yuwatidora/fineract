@@ -25,7 +25,9 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.validate.ValidationException;
+import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidationException;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
+import org.apache.fineract.organisation.workingdays.api.WorkingDaysApiConstants;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequest;
 import org.apache.fineract.organisation.workingdays.data.WorkingDaysUpdateRequestValidator;
 import org.apache.fineract.organisation.workingdays.domain.WorkingDays;
@@ -54,6 +56,7 @@ public class WorkingDaysWritePlatformServiceJpaRepositoryImpl implements Working
             Map<String, Object> changes = update(workingDays, request);
             this.daysRepositoryWrapper.saveAndFlush(workingDays);
             return changes;
+
         } catch (final ValidationException e) {
             throw new PlatformDataIntegrityException("error.msg.invalid.recurring.rule",
                     "The Recurring Rule value: " + recurrence + " is not valid.", "recurrence", recurrence, e);
