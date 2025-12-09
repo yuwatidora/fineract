@@ -36,7 +36,7 @@ public class WorkingDaysUpdateResponse implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String recurrence;
-    private String repaymentRescheduleType;
+    private Integer repaymentRescheduleType;
     private Boolean extendTermForDailyRepayments;
     private Boolean extendTermForRepaymentsOnHolidays;
     private Map<String, Object> changes;

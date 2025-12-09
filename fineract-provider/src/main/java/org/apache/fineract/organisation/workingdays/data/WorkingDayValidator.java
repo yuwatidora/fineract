@@ -36,6 +36,7 @@ import org.apache.fineract.infrastructure.core.serialization.FromJsonHelper;
 import org.apache.fineract.organisation.workingdays.api.WorkingDaysApiConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 //Not used
 @Component
 public class WorkingDayValidator {

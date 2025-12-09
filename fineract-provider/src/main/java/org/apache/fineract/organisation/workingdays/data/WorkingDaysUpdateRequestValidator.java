@@ -18,12 +18,8 @@
  */
 package org.apache.fineract.organisation.workingdays.data;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.fortuna.ical4j.model.property.RRule;
-import net.fortuna.ical4j.validate.ValidationException;
 import org.apache.fineract.infrastructure.core.data.ApiParameterError;
 import org.apache.fineract.infrastructure.core.data.DataValidatorBuilder;
 import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidationException;
@@ -41,31 +37,19 @@ public class WorkingDaysUpdateRequestValidator {
 
         // recurrence (mandatory)
         String recurrence = request.getRecurrence();
-        validator.reset()
-                .parameter(WorkingDaysApiConstants.recurrence)
-                .value(recurrence)
-                .notNull();
+        validator.reset().parameter(WorkingDaysApiConstants.recurrence).value(recurrence).notNull();
 
         // repaymentRescheduleType (optional, but must be 1–4 if present)
-        validator.reset()
-                .parameter(WorkingDaysApiConstants.repayment_rescheduling_enum)
-                .value(request.getRepaymentRescheduleType())
-                .ignoreIfNull()
-                .inMinMaxRange(1, 4);
+        validator.reset().parameter(WorkingDaysApiConstants.repayment_rescheduling_enum).value(request.getRepaymentRescheduleType())
+                .ignoreIfNull().inMinMaxRange(1, 4);
 
         // extendTermForDailyRepayments (optional but must be boolean if provided)
-        validator.reset()
-                .parameter(WorkingDaysApiConstants.extendTermForDailyRepayments)
-                .value(request.getExtendTermForDailyRepayments())
-                .ignoreIfNull()
-                .validateForBooleanValue();
+        validator.reset().parameter(WorkingDaysApiConstants.extendTermForDailyRepayments).value(request.getExtendTermForDailyRepayments())
+                .ignoreIfNull().validateForBooleanValue();
 
         // extendTermForRepaymentsOnHolidays (optional but must be boolean if provided)
-        validator.reset()
-                .parameter(WorkingDaysApiConstants.extendTermForRepaymentsOnHolidays)
-                .value(request.getExtendTermForRepaymentsOnHolidays())
-                .ignoreIfNull()
-                .validateForBooleanValue();
+        validator.reset().parameter(WorkingDaysApiConstants.extendTermForRepaymentsOnHolidays)
+                .value(request.getExtendTermForRepaymentsOnHolidays()).ignoreIfNull().validateForBooleanValue();
 
         throwExceptionIfValidationWarningsExist(validationErrors);
     }
@@ -76,4 +60,3 @@ public class WorkingDaysUpdateRequestValidator {
         }
     }
 }
-

@@ -42,7 +42,8 @@ public final class WorkingDaysHelper {
     // org.apache.fineract.client.models.PostLoansLoanIdRequest)
     @Deprecated(forRemoval = true)
     public static Object updateWorkingDays(final RequestSpecification requestSpec, final ResponseSpecification responseSpec) {
-        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL + "?" + Utils.TENANT_IDENTIFIER;
+        // final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL + "?" + Utils.TENANT_IDENTIFIER;
+        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL;
         LOG.info("---------------------------------UPDATE WORKINGDAY---------------------------------------------");
         return Utils.performServerPut(requestSpec, responseSpec, UPDATE_WORKINGDAYS_URL, updateWorkingDaysAsJson(), "");
     }
@@ -53,7 +54,7 @@ public final class WorkingDaysHelper {
     @Deprecated(forRemoval = true)
     public static Object updateWorkingDaysWithWrongRecurrence(final RequestSpecification requestSpec,
             final ResponseSpecification responseSpec, String jsonAttributeToGetback) {
-        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL + "?" + Utils.TENANT_IDENTIFIER;
+        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL;
         LOG.info("---------------------------------UPDATE WORKINGDAY WITH WRONG RECURRENCE-----------------------------------------");
         return Utils.performServerPut(requestSpec, responseSpec, UPDATE_WORKINGDAYS_URL, updateWorkingDayWithWrongRecur(),
                 jsonAttributeToGetback);
@@ -64,7 +65,8 @@ public final class WorkingDaysHelper {
     // org.apache.fineract.client.models.PostLoansLoanIdRequest)
     @Deprecated(forRemoval = true)
     public static Object updateWorkingDaysWeekDays(final RequestSpecification requestSpec, final ResponseSpecification responseSpec) {
-        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL + "?" + Utils.TENANT_IDENTIFIER;
+        // final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL + "?" + Utils.TENANT_IDENTIFIER;
+        final String UPDATE_WORKINGDAYS_URL = WORKINGDAYS_URL;
         LOG.info("---------------------------------UPDATE WORKINGDAY---------------------------------------------");
         return Utils.performServerPut(requestSpec, responseSpec, UPDATE_WORKINGDAYS_URL, updateWorkingWeekDaysDaysAsJson(), "");
     }

@@ -18,9 +18,6 @@
  */
 package org.apache.fineract.organisation.workingdays.data;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;

@@ -18,6 +18,7 @@
  */
 package org.apache.fineract.organisation.workingdays.handler;
 
+import java.util.Collections;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +42,14 @@ public class UpdateWorkingDaysCommandHandler implements CommandHandler<WorkingDa
     public WorkingDaysUpdateResponse handle(Command<WorkingDaysUpdateRequest> command) {
         WorkingDaysUpdateRequest request = command.getPayload();
         Map<String, Object> changes = this.workingDaysWritePlatformService.updateWorkingDays(request);
+        if (changes == null) {
+            changes = Collections.emptyMap();
+        }
 
         return WorkingDaysUpdateResponse.builder().changes(changes).recurrence(request.getRecurrence())
-                .repaymentRescheduleType(request.getRecurrence()).extendTermForDailyRepayments(request.getExtendTermForDailyRepayments())
-                .extendTermForDailyRepayments(request.getExtendTermForDailyRepayments()).build();
+                .repaymentRescheduleType(request.getRepaymentRescheduleType())
+                .extendTermForDailyRepayments(request.getExtendTermForDailyRepayments())
+                .extendTermForRepaymentsOnHolidays(request.getExtendTermForRepaymentsOnHolidays()).build();
     }
 
 }

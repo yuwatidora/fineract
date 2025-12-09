@@ -27,6 +27,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import org.apache.fineract.integrationtests.common.CommonConstants;
 import org.apache.fineract.integrationtests.common.Utils;
 import org.apache.fineract.integrationtests.common.WorkingDaysHelper;
@@ -44,9 +45,18 @@ public class WorkingDaysTest {
     @BeforeEach
     public void setUp() {
         Utils.initializeRESTAssured();
-        this.requestSpec = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
-        this.requestSpec.header("Authorization", "Basic " + Utils.loginIntoServerAndGetBase64EncodedAuthenticationKey());
+        // this.requestSpec = new RequestSpecBuilder().setContentType(ContentType.JSON).build();
+        // this.requestSpec.header("Authorization", "Basic " +
+        // Utils.loginIntoServerAndGetBase64EncodedAuthenticationKey());
+        // this.responseSpec = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // this.generalResponseSpec = new ResponseSpecBuilder().build();
+        this.requestSpec = new RequestSpecBuilder().setContentType(ContentType.JSON)
+                .addHeader("Authorization", "Basic " + Utils.loginIntoServerAndGetBase64EncodedAuthenticationKey())
+                .addHeader("x-fineract-tenant-id", "default")
+                .addHeader("Idempotency-Key", UUID.randomUUID().toString()).build();
+
         this.responseSpec = new ResponseSpecBuilder().expectStatusCode(200).build();
+
         this.generalResponseSpec = new ResponseSpecBuilder().build();
 
     }
