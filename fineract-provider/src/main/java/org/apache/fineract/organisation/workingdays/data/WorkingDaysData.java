@@ -33,7 +33,6 @@ import org.apache.fineract.infrastructure.core.data.EnumOptionData;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldNameConstants
-// TODO add a change function? and remove all these constructors?, try to use the builder pattern instead
 public class WorkingDaysData implements Serializable {
 
     @Serial

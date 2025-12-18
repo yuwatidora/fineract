@@ -26,7 +26,9 @@ licenses
 **/.asciidoctor/diagram/*
 **/images/diag-*.svg
 
-fineract-provider/src/main/generated/
+# Generated sources (MapStruct, OpenAPI, test generators, etc.)
+**/generated/**
+**/generated_tests/**
 
 **/out/
 gradleExp/
@@ -35,3 +37,7 @@ gradleExp/
 .java-version
 
 .windsurf/
+
+integration-test.sh
+
+aggregator.patch

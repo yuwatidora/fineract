@@ -20,6 +20,8 @@ package org.apache.fineract.organisation.workingdays.data;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +31,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class WorkingDaysUpdateRequest implements Serializable {
 
     @Serial
@@ -41,5 +44,7 @@ public class WorkingDaysUpdateRequest implements Serializable {
     private Boolean extendTermForDailyRepayments;
 
     private Boolean extendTermForRepaymentsOnHolidays;
+
+    private String locale;
 
 }

@@ -51,6 +51,8 @@ public class WorkingDaysUpdateRequestValidator {
         validator.reset().parameter(WorkingDaysApiConstants.extendTermForRepaymentsOnHolidays)
                 .value(request.getExtendTermForRepaymentsOnHolidays()).ignoreIfNull().validateForBooleanValue();
 
+        // locale
+        validator.reset().parameter(WorkingDaysApiConstants.localeParamName).value(request.getLocale()).ignoreIfNull();
         throwExceptionIfValidationWarningsExist(validationErrors);
     }
 
